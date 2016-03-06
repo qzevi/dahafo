@@ -1,4 +1,4 @@
-package org.dahafo.core.util;
+package com.dahafo.core.util;
 
 import java.io.IOException;
 import java.io.InputStream;

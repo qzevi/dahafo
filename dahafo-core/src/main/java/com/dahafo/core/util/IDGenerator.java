@@ -1,4 +1,4 @@
-package org.dahafo.core.util;
+package com.dahafo.core.util;
 
 import java.net.InetAddress;
 import java.util.Random;

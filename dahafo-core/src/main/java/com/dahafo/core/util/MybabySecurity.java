@@ -1,4 +1,4 @@
-package org.dahafo.core.util;
+package com.dahafo.core.util;
 
 import java.security.Key;
 import java.security.KeyFactory;

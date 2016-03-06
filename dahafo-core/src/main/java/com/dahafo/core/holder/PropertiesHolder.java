@@ -1,4 +1,4 @@
-package org.dahafo.core.holder;
+package com.dahafo.core.holder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.dahafo.core.util.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -18,6 +17,8 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
+
+import com.dahafo.core.util.PropertiesUtil;
 
 
 
