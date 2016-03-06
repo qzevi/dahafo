@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<contextName>minedata</contextName>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 必要！保存到tomcat日志目录下 -->
+	<appender name="logCacheException"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${catalina.base}/logs/logcache/logcache.data-%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.ailk.tosd" level="DEBUG">
+		<appender-ref ref="logCacheException" />
+	</logger>
+	<!--log4jdbc -->
+	<logger name='jdbc.sqltiming' additivity='false' />
+	<logger name='jdbc.audit' additivity='false' />
+	<logger name='jdbc.resultset' additivity='false' />
+	<logger name='jdbc.connection' additivity='false' />
+	<logger name='jdbc.resultsettable' additivity='false' />
+	<logger name="jdbc.sqlonly" level="INFO" />
+
+	<root level="DEBUG">
+		<appender-ref ref="console" />
+	</root>
+
+</configuration>

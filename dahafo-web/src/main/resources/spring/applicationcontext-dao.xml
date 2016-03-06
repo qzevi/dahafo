@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+
+<!-- 属性文件加载 -->
+	<bean id="propertyConfigurer" class="com.dahafo.core.holder.PropertiesHolder" lazy-init="false">
+		<property name="locations">
+			<list>
+				<value>classpath*:properties/*.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
+	
+	 <!--typeAliases 扫描包定义 -->
+	<bean id="typeAliasesPackageProp" class="com.dahafo.core.extend.TypeAliasesPackagePropExtend" >
+		<property name="typeAliasesPackages">
+			<list>
+				<value>com.dahafo.web.**.entity</value>
+			</list>
+		</property>
+		<property name="rootPackage" value="com/dahafo/web/" />
+	</bean> 
+
+	
+	<!-- myBatis文件 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="typeAliasesPackage" ref="typeAliasesPackageProp" />
+	    <property name="mapperLocations" value="classpath*:mapping/*Mapper.xml" />
+		<property name="typeAliasesSuperType" value="com.dahafo.core.IEntity" />
+        <property name="configurationProperties">
+			<props>
+				<prop key="BASE_SCHEMA">${base.schema}</prop>
+			</props>	
+		</property>
+	</bean>
+	<!-- 配置数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">
+		<property name="url" value="${url}" />
+		<property name="username" value="${user_name}" />
+		<property name="password" value="${pass_word}" />
+		<property name="initialSize" value="1" />
+		<property name="minIdle" value="1" />
+		<property name="maxActive" value="20" />
+	</bean>
+
+
+	<bean id="sqlSession" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dahafo.web.**.dao" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+</beans>
